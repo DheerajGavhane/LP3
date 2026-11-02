@@ -1,0 +1,12 @@
+Windows (CMD)	Ubuntu (Terminal)
+python --version	python3 --version
+pip --version	pip3 --version
+sudo apt update
+sudo apt install python3
+
+jupyter notebook --version	notebook --version
+pip install notebook  pip3 install notebook
+jupyter notebook jupyter notebook
+pip3 install pandas
+pip list
+pip install scikit-learn

@@ -1,0 +1,74 @@
+#1. Import Required Libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+#2. Read Dataset
+df = pd.read_csv("sales_data_sample.csv", encoding="latin1")
+df.head()
+#3. Select Features
+X = df[["SALES", "QUANTITYORDERED"]]
+#4. Normalize Data
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+#5.Determine Number of Clusters Using Elbow Method
+wcss = []
+
+for i in range(1, 11):
+    km = KMeans(n_clusters=i, random_state=42, n_init=10)
+    km.fit(X)
+    wcss.append(km.inertia_)
+
+plt.plot(range(1, 11), wcss, marker="o")
+plt.xlabel("Number of Clusters")
+plt.ylabel("WCSS")
+plt.title("Elbow Method")
+plt.show()
+#Implement K-Means Clustering
+km = KMeans(n_clusters=5, random_state=42, n_init=10)
+y = km.fit_predict(X)
+df["Cluster"] = y
+df.head()
+#8. Visualize Clusters
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap="rainbow")
+plt.xlabel("Sales")
+plt.ylabel("Quantity Ordered")
+plt.show()
+#9. Display Cluster Centers
+print("Cluster Centers:")
+print(km.cluster_centers_)
+
+Clustering is an unsupervised machine learning technique used to divide data into groups called clusters.
+Data points within the same cluster are similar to one another, while points in different clusters are relatively dissimilar.
+K-Means is an unsupervised, centroid-based clustering algorithm. It divides data into K predefined clusters.
+
+How K-Means works:
+1. Select the number of clusters, K.
+2. Initialize K centroids.
+3. Assign each data point to its nearest centroid.
+4. Calculate new centroids using the mean of the points in each cluster.
+5. Repeat the assignment and centroid calculation.
+6. Stop when the centroids no longer change significantly or the iteration limit is reached.
+
+Hierarchical clustering creates groups of data points in a hierarchy.
+There are two main types:
+1. Agglomerative: Starts with each data point as an individual cluster and repeatedly merges the closest clusters.
+2. Divisive: Starts with all data points in one cluster and repeatedly divides them into smaller clusters.
+K-Means	Hierarchical
+Centroid-based algorithm	Hierarchy-based algorithm
+Number of clusters K is specified	Clusters can be selected by cutting the dendrogram
+Uses centroids	Uses distances between clusters
+Generally faster for larger datasets	Can be computationally expensive for large datasets
+Uses the Elbow Method to help choose K	Uses a dendrogram to help choose clusters
+
+wcss = [] creates an empty list.
+range(1,11) tests cluster counts from 1 to 10.
+KMeans(n_clusters=i) creates a K-Means model with i clusters.
+fit(X_scaled) trains the clustering model.
+inertia_ returns the WCSS value.
+wcss.append() stores the WCSS for each K.
+plt.plot() draws the Elbow graph.
+WCSS stands for Within-Cluster Sum of Squares. It measures the sum of squared distances between data points and their respective cluster centroids.
+The Elbow Method is used to determine a suitable number of clusters by plotting WCSS against different values of K.

@@ -1,0 +1,157 @@
+#1. Import Required Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, mean_squared_error
+ #2. Load Dataset
+df = pd.read_csv("uber.csv")
+df.head()
+#3. Data Preprocessing
+#Remove Missing Values
+df = df.dropna()
+#Remove Unnecessary Column
+df = df.drop(columns=['Unnamed: 0', 'key'], errors='ignore')
+#Convert Pickup Datetime
+df["pickup_datetime"] = pd.to_datetime(df["pickup_datetime"])
+df["hour"] = df["pickup_datetime"].dt.hour
+df["day"] = df["pickup_datetime"].dt.day
+df["month"] = df["pickup_datetime"].dt.month
+df["year"] = df["pickup_datetime"].dt.year
+df = df.drop(columns=['pickup_datetime'])
+#Remove Invalid Values and Outliers
+df = df[(df["passenger_count"] > 0) & (df["passenger_count"] <= 6)]
+df = df[
+    (df["pickup_longitude"].between(-180, 180)) &
+    (df["dropoff_longitude"].between(-180, 180)) &
+    (df["pickup_latitude"].between(-90, 90)) &
+    (df["dropoff_latitude"].between(-90, 90))
+]
+#4. Identify Outliers Using Box Plot
+plt.boxplot(df["fare_amount"])
+plt.title("Fare Amount Outliers")
+plt.show()
+#5.Split Dataset
+X = df.drop("fare_amount", axis=1)
+y = df["fare_amount"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+#6.Implement Linear Regression
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+y_pred_lr = lr.predict(X_test)
+print(y_pred_lr)
+#7.Implement Random Forest Regression
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+y_pred_rf = rf.predict(X_test) 
+#8.Evaluate Models
+print("Linear Regression")
+
+print("R2 Score:", r2_score(y_test, y_pred_lr))
+print("RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_lr)))
+print("MSE:", mean_squared_error(y_test, y_pred_lr))
+
+
+print("\nRandom Forest Regression")
+
+print("R2 Score:", r2_score(y_test, y_pred_rf))
+print("RMSE:", np.sqrt(mean_squared_error(y_test, y_pred_rf)))
+print("MSE:", mean_squared_error(y_test, y_pred_rf))
+df
+result = pd.DataFrame()
+
+result["Actual Fare"] = y_test.values
+result["Linear Regression"] = y_pred_lr
+result["Random Forest"] = y_pred_rf
+
+display(result)
+
+Data preprocessing is the process of cleaning and transforming raw data into a suitable format for machine learning algorithms.
+Real-world datasets may contain:
+- Missing values.
+- Duplicate records.
+- Incorrect or invalid values.
+- Outliers.
+- Data in inconsistent formats.
+
+Linear Regression is a supervised machine learning algorithm used to predict continuous numerical values.
+Y=b_0+b_1X_1+b_2X_2+.....+b_nX_n
+Y = Predicted fare.
+\(b_0\) = Intercept.
+\(b_1,b_2,\ldots,b_n\) = Model coefficients.
+\(X_1,X_2,\ldots,X_n\) = Input features.
+
+Random Forest Regression is a supervised machine learning algorithm based on the concept of Ensemble Learning.
+It combines multiple Decision Trees to make predictions.
+Working:
+1. Select random samples from the training dataset.
+2. Build multiple Decision Trees.
+3. Each tree makes its own prediction.
+4. Calculate the average of all tree predictions.
+5. Return the final predicted fare.
+For example, if three trees predict fares of ₹100, ₹120, and ₹110:
+Prediction=\frac{100+120+110}{3}=110
+
+An outlier is a data point that differs significantly from other observations in a dataset.
+For example, if most Uber rides have fares between ₹50 and ₹500, but one record has a fare of ₹50,000, it may be an outlier.
+Types of outliers:
+1. Global Outlier: A data point that differs significantly from the entire dataset.
+2. Collective Outlier: A group of data points that behaves differently from the rest of the dataset.
+3. Contextual Outlier: A data point that is abnormal in a particular context but may be normal in another context.
+
+A Box Plot is a graphical representation used to identify outliers and understand the distribution of numerical data.
+It displays:
+- Minimum value.
+- First Quartile (Q1).
+- Median (Q2).
+- Third Quartile (Q3).
+- Maximum value.
+- Potential outliers.
+The Interquartile Range is:
+IQR=Q3-Q1
+Outlier boundaries:
+Lower=Q1-1.5(IQR)
+Upper=Q3+1.5(IQR)
+
+The Haversine formula calculates the shortest distance between two geographical points on the surface of a sphere using latitude and longitude.
+
+Matplotlib is a Python visualization library used to create graphs and charts.
+Common plots include:
+- Line plot.
+- Bar plot.
+- Scatter plot.
+- Histogram.
+- Box plot.
+
+Mean Squared Error measures the average squared difference between actual and predicted values.
+MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2
+Where:
+- \(y_i\) = Actual value.
+- \(\hat y_i\) = Predicted value.
+- n = Number of observations.
+A lower MSE indicates better predictions.
+RMSE is the square root of MSE.
+It measures prediction error in the same unit as the target variable (fare).
+Lower RMSE is better.
+
+R² measures how well a regression model explains the variation in the target variable.
+R² = 1: Perfect prediction.
+R² = 0: Model performs like predicting the mean.
+R² less than 0: Model performs worse than predicting the mean.
+Higher R² is generally better
+
+pip install pandas numpy matplotlib seaborn scikit-learn
+
+
+Library	Purpose
+Pandas	Loading and preprocessing datasets
+NumPy	Mathematical calculations
+Matplotlib	Creating graphs and visualizations
+Seaborn	Creating statistical plots and heatmaps
+Scikit-learn	Implementing ML models and evaluating performance

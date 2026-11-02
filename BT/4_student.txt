@@ -1,0 +1,76 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.0;
+
+contract StudentData {
+
+    //structure
+    struct Student {
+        string name;
+        uint rollno;
+    }
+
+    // array
+    Student[] public studentarr;
+
+    function addStudent(string memory name, uint rollno) public {
+        for(uint i=0; i<studentarr.length; i++) {
+            if(studentarr[i].rollno == rollno) {
+                revert("Student roll no already exist");
+            }
+        }
+        studentarr.push(Student(name, rollno));
+    }
+
+    function displayAllStudents() public view returns(Student[] memory) {
+        return studentarr;
+    }
+
+    function getStudentByIndex(uint idx) public view returns(Student memory) {
+        require(idx < studentarr.length, "index out of bound");
+        return studentarr[idx];
+    }
+
+    function getStudentCount() public view returns(uint) {
+        return studentarr.length;
+    }
+
+    fallback() external payable {
+        //This fuction will handle external function calls that are not included in the contract
+    }
+
+    receive() external payable { 
+        //this function will handle ether sent by external user but without data mentioned.
+    }
+}
+
+Solidity is a high-level, statically typed programming language used to write smart contracts for Ethereum and other EVM-compatible blockchain networks.
+A smart contract is a program stored on the blockchain. Once deployed, its functions can be executed through blockchain transactions or calls.
+A structure allows multiple related data items of different data types to be grouped into a single user-defined data type.
+For example:
+struct Student {
+    uint id;
+    string name;
+    uint age;
+    string course;
+}
+An array stores multiple values of the same data type.
+In this experiment, a dynamic array stores multiple student records.
+Student[] public students;
+D. Fallback Function
+A fallback function is a special Solidity function that executes when:
+- A contract receives a call that does not match any existing function.
+- Ether is sent to the contract and no suitable receive() function is available.
+Example:
+fallback() external payable {
+}
+- fallback is the special function name.
+- external means it can be called from outside the contract.
+- payable allows the contract to receive Ether.
+Term	Meaning
+Gas	Unit measuring computational work
+Gas Used	Actual gas consumed by a transaction
+Gas Limit	Maximum gas allowed for a transaction
+Gas Price	Cost per unit of gas
+Effective Gas Price	Actual price paid per gas unit
+Transaction Fee	Total fee paid for the transaction
+Transaction Hash	Unique identifier of a transaction

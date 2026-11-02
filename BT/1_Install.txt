@@ -1,0 +1,53 @@
+Blockchain is a decentralized digital network that stores transactional records in blocks. These blocks are connected to one another using cryptographic techniques.
+meaning that no single authority controls the entire network. Copies of the ledger are maintained by multiple participants in the network.
+
+Features of Blockchain
+1. Decentralization
+- No single person or organization controls the entire blockchain.
+2. Immutability
+- Once information is confirmed and recorded, it is extremely difficult to modify.
+3. Tamper resistance
+- Blockchain uses cryptographic hashes and linked blocks.
+- This makes unauthorized modifications detectable.
+4. Transparency
+- Public blockchain transactions can be viewed by network participants.
+5. Security
+- Cryptography and consensus mechanisms help protect transactions and records
+
+Applications of Blockchain
+Application	Use
+Banking	Secure digital payments and transfers
+Healthcare	Maintaining medical records
+Cryptocurrency	Digital currency transactions
+
+MetaMask is a digital wallet that allows user to store cryptocurrency that allows users to manage blockchain accounts and interact with decentralized applications (dApps)
+Ether is the native cryptocurrency of the Ethereum blockchain.
+It is used for:
+- Sending and receiving digital currency.
+- Paying transaction fees.
+- Interacting with smart contracts.
+- Using decentralized applications.
+
+A gas fee is the transaction fee paid to the Ethereum network for processing a transaction.
+1. Public Blockchain
+- Open to everyone.
+- Anyone can participate according to the network rules.
+- Transactions can be publicly verified.
+- Examples: Bitcoin and Ethereum.
+2. Private Blockchain
+- Controlled by a single organization.
+- Only authorized users can participate.
+- Used for internal business operations.
+3. Consortium Blockchain
+- Controlled by a group of organizations.
+- Multiple organizations share control.
+- Used in banking and supply chain management.
+4. Hybrid Blockchain
+- Combination of public and private blockchain features.
+- Some information is public, while other information is restricted.
+- Used in enterprise applications.
+
+A Merkle Tree is a tree-like data structure that uses cryptographic hashes to efficiently verify data integrity.
+
+It is also called a hash tree.
+What is Sepolia?	An Ethereum test network.

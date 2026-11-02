@@ -1,0 +1,72 @@
+#1.1. Import Required Libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score, classification_report
+#2. Load Dataset
+df = pd.read_csv("emails.csv")
+df.head()
+df.shape
+#3. Data Preprocessing
+df = df.dropna()
+X = df.drop(columns=["Email No.", "Prediction"])
+y = df["Prediction"]
+#4. Split Dataset into Training and Testing Sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+#5.Train and evaluate models
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+y_pred_knn = knn.predict(X_test)
+
+print("KNN Accuracy:", accuracy_score(y_test, y_pred_knn))
+print(classification_report(y_test, y_pred_knn))
+
+# 5. SVM Model
+svm = LinearSVC(max_iter=10000, random_state=42)
+svm.fit(X_train, y_train)
+y_pred_svm = svm.predict(X_test)
+
+print("SVM Accuracy:", accuracy_score(y_test, y_pred_svm))
+print(classification_report(y_test, y_pred_svm))
+results = pd.DataFrame({
+    "Model": ["KNN", "SVM"],
+    "Accuracy": [
+        accuracy_score(y_test, y_pred_knn),
+        accuracy_score(y_test, y_pred_svm)
+    ]
+})
+
+print(results)
+
+Binary classification is a supervised machine learning technique in which data is classified into exactly two categories.
+In this practical:
+- Class 0 → Normal email (Not Spam)
+- Class 1 → Abnormal email (Spam)
+
+KNN is a supervised machine learning algorithm used for classification and regression.
+It classifies a new data point based on the majority class of its K nearest neighbors.
+Working:
+1. Select the value of K.
+2. Calculate the distance between the new data point and training data points.
+3. Find the K nearest neighbors.
+4. Count the classes of those neighbors.
+5. Assign the majority class as the prediction.
+
+SVM is a supervised machine learning algorithm mainly used for classification.
+
+It finds the best decision boundary, called a hyperplane, to separate different classes.
+Metric	Meaning
+Precision	Out of emails predicted as spam, how many were actually spam?
+Recall	Out of actual spam emails, how many were correctly detected?
+F1-score	Balance between precision and recall.
+Support	Number of actual samples in each class.
+Precision=\frac{TP}{TP+FP}
+Recall=\frac{TP}{TP+FN}
+F1=\frac{2\times Precision\times Recall}{Precision+Recall}
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+
+Macro Average	Weighted Average
+Equal importance to each class	Importance based on support

@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.0;
+
+contract Bank {
+    uint256 Balance=0;
+    address public accOwner;
+
+    constructor() {
+        accOwner = msg.sender;
+    }
+
+    //deposit
+    function Deposit() public payable {
+        require(accOwner == msg.sender, "You are not the account Owner");
+        require(msg.value > 0, "depositing value should be greater than 0");
+        Balance+=msg.value;
+    }
+
+    //withdraw
+    function Withdraw() public payable {
+        require(accOwner == msg.sender, "You are not the account Owner");
+        require(msg.value > 0, "withdrawal value should be greater than 0");
+        Balance-=msg.value;
+    }
+
+    //showbalance
+    function showBalance() public view returns(uint256) {
+        require(accOwner == msg.sender, "You are not the account Owner");
+        return Balance;
+    }
+}
+
+smart contract means digital contract that contains rules and conditions for any operations
+Solidity is a programming language used to write smart contracts that run on the Ethereum Virtual Machine (EVM).
+Keyword	Meaning
+msg.sender	Address of the account calling the function
+msg.value	Amount of Ether sent with the transaction, in Wei
+payable	Allows a function to receive Ether
+mapping	Stores key-value pairs
+require()	Checks a condition and reverts if it is false
+address(this).balance	Total Ether held by the smart contract
+transfer()	Transfers Ether to another address
+view	Indicates that a function reads data without modifying blockchain state
+Ether and Wei
+Ether is the cryptocurrency used on Ethereum.
+- 1 Ether = \(10^{18}\) Wei
+- Ether is the human-readable unit.
+- Wei is the smallest unit of Ether.

@@ -1,0 +1,70 @@
+#1. Import Required Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+from sklearn.preprocessing import StandardScaler
+#2. Read Dataset
+df = pd.read_csv("diabetes.csv")
+df.head()
+#3.Separate Features and Target
+X = df.drop("Outcome", axis=1)
+y = df["Outcome"]
+#4.Split Dataset into Training and Testing Sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+#5.Feature scaling (important for KNN)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+#6.Implement KNN Algorithm
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+#7.Calculate Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
+#8.Calculate Accuracy, Error Rate, Precision and Recall
+accuracy = accuracy_score(y_test, y_pred)
+error_rate = 1 - accuracy
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+print("Error Rate:", error_rate)
+print("Precision:", precision)
+print("Recall:", recall)
+
+K-Nearest Neighbors is a supervised machine learning algorithm used for classification and regression.
+
+It predicts the class of a new data point by finding the K closest data points in the training dataset and assigning the majority class.
+Working of KNN:
+1. Select the value of K.
+2. Calculate the distance between the new data point and existing training data points.
+3. Find the K nearest neighbors.
+4. Count the class labels of the neighbors.
+5. Assign the majority class to the new data point.
+Scikit-learn is a Python machine learning library used for data preprocessing, classification, regression and model evaluation
+Accuracy
+- Definition: Measures the proportion of total predictions that are correctly classified.
+- Formula:
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+2. Error Rate
+- Definition: Measures the proportion of total predictions that are incorrectly classified.
+- Formula:
+Error\ Rate=\frac{FP+FN}{TP+TN+FP+FN}
+3. Precision
+- Definition: Measures how many of the predicted positive cases are actually positive.
+- Formula:
+Precision=\frac{TP}{TP+FP}
+4. Recall
+- Definition: Measures how many of the actual positive cases are correctly identified by the model.
+- Formula:
+Recall=\frac{TP}{TP+FN}
+5. F1-Score
+- Definition: Harmonic mean of Precision and Recall. It balances both metrics.
+- Formula:
+F1=\frac{2\times Precision\times Recall}{Precision+Recall}

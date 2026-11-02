@@ -1,0 +1,47 @@
+Cryptocurrency is a digital form of currency that uses cryptography to secure transactions.
+Unlike traditional banking systems, cryptocurrency can enable peer-to-peer transactions without requiring a bank to verify every payment.
+A cryptocurrency wallet is a software application or physical device used to manage the cryptographic keys that control access to cryptocurrency.
+
+Types of cryptocurrency wallets
+1. Hot Wallet
+- Connected to the internet.
+- Easy to access and use.
+- Suitable for frequent transactions.
+- More exposed to online threats.
+Examples: MetaMask and mobile cryptocurrency wallets.
+2. Cold Wallet
+- Stores private keys offline.
+- Provides protection against many online attacks.
+- Suitable for long-term storage.
+- Usually requires a physical device or secure offline setup.
+Examples: Hardware wallets and properly secured offline wallets.
+
+Phishing Scams
+- Scammers create fake websites, emails or messages.
+- They pretend to be legitimate cryptocurrency platforms.
+- They ask users to enter their wallet passwords or recovery phrases.
+- They steal wallet credentials and cryptocurrency.
+Example: A fake MetaMask website asking for your Secret Recovery Phrase.
+
+2. Ponzi and Pyramid Schemes
+- Scammers promise unusually high returns on cryptocurrency investments.
+- They use money from new investors to pay earlier investors.
+- Eventually, the scheme collapses when new investments stop.
+Example: A platform promising guaranteed 20% monthly cryptocurrency returns.
+
+3. Fake ICO and Investment Scams
+- Scammers introduce fake cryptocurrency projects.
+- They advertise unrealistic profits and future growth.
+- Investors purchase fake tokens or send cryptocurrency to scammers.
+- The scammers disappear with the funds.
+ICO stands for Initial Coin Offering.
+
+4. Giveaway and Impersonation Scams
+- Scammers impersonate celebrities, companies or cryptocurrency influencers.
+- They promise to double the cryptocurrency sent to them.
+- Victims send cryptocurrency but never receive anything in return.
+Example: "Send 1 ETH and receive 2 ETH."
+
+Types of Cryptojacking:
+1. Browser-based cryptojacking: Malicious scripts run through a web browser.
+2. Malware-based cryptojacking: Malicious software is installed on the victim's device.

@@ -1,0 +1,99 @@
+#1. Import Required Libraries
+import pandas as pd
+import numpy as np
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.neural_network import MLPClassifier
+#2. Read Dataset
+df = pd.read_csv("Churn_Modelling.csv")
+df.head()
+#3.Preprocess dataset
+df = df.drop(columns=["RowNumber", "CustomerId", "Surname"])
+df = pd.get_dummies(df, columns=["Geography", "Gender"], drop_first=True, dtype=int)
+df
+#4. Separate features and target
+X = df.drop(columns=["Exited"])
+y = df["Exited"]
+#5.Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+#6.Scale features Training and Testing Data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+#7.Build and train neural network
+model = MLPClassifier(
+    hidden_layer_sizes=(16, 8),
+    max_iter=300,
+    random_state=42
+)
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+#8.Evaluate model
+print("Accuracy:", round(accuracy_score(y_test, y_pred), 4))
+print("Confusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+print("Classification Report:")
+print(classification_report(
+    y_test, y_pred,
+    target_names=["Will Stay", "Will Leave"],
+    zero_division=0
+))
+
+An Artificial Neural Network is a machine learning model inspired by the structure and working of the human brain.
+The human brain contains interconnected neurons. Similarly, an ANN contains interconnected artificial neurons called nodes.
+These nodes process input information, learn patterns, and generate output.
+1. Input Layer
+- Receives the input data.
+- Each input feature is represented by an input node.
+- Example: Age, CreditScore, Balance, Geography, etc.
+2. Hidden Layer
+- Present between the input and output layers.
+- Performs calculations.
+- Learns hidden patterns and relationships in the data.
+- An ANN can contain one or more hidden layers.
+3. Output Layer
+- Produces the final prediction.
+- In this practical, it has one neuron.
+- Predicts whether the customer will stay or leave.
+
+Normalization is a data preprocessing technique used to bring numerical values into a common range, often between 0 and 1.
+X_{norm}=\frac{X-X_{min}}{X_{max}-X_{min}}
+Standardization is a preprocessing technique that transforms numerical data so that it has approximately:
+- Mean = 0
+- Standard deviation = 1
+Z=\frac{X-\mu}{\sigma}
+
+A confusion matrix is a table used to evaluate the performance of a classification model.
+Precision	Out of emails predicted as spam, how many were actually spam?
+Recall	Out of actual spam emails, how many were correctly detected?
+F1-score	Balance between precision and recall.
+Support	Number of actual samples in each class.
+Precision=\frac{TP}{TP+FP}
+Recall=\frac{TP}{TP+FN}
+F1=\frac{2\times Precision\times Recall}{Precision+Recall}
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+Macro Average	Weighted Average
+Equal importance to each class	Importance based on support
+
+fit() calculates the mean and standard deviation from training data.
+transform() uses those values to scale the training data.
+This scales the testing data using the same mean and standard deviation calculated from training data.
+hidden_layer_sizes=(16, 8)
+- Creates 2 hidden layers.
+- First hidden layer contains 16 neurons.
+- Second hidden layer contains 8 neurons.
+Keras is a high-level deep learning API used to build neural network models.
+
+cm = confusion_matrix(y_test, y_pred)
+TN, FP, FN, TP = cm.ravel()
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+error_rate = (FP + FN) / (TP + TN + FP + FN)
+precision = TP / (TP + FP) if (TP + FP) != 0 else 0
+recall = TP / (TP + FN) if (TP + FN) != 0 else 0
+f1_score = (2 * precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+specificity = TN / (TN + FP) if (TN + FP) != 0 else 0
